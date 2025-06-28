@@ -74,7 +74,7 @@ You can head over to the config files to change the parameters.
 
 ```bibtex
 @inproceedings{maharana2025batclip,
-  title={BATCLIP: Bimodal Online Test-Time Adaptation of CLIP},
+  title={BATCLIP: Bimodal Online Test-Time Adaptation for CLIP},
   author={Maharana, Sarthak Kumar and Zhang, Baoming and Karlinsky, Leonid and Feris, Rogerio and Guo, Yunhui},
   journal={International Conference on Computer Vision (ICCV)},
   year={2025}
