@@ -1,10 +1,18 @@
 MODEL:
   ADAPTATION: bnalpha
-  ARCH: Hendrycks2020AugMix_ResNeXt
+  ARCH: ViT-B-32
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
+CLIP:
+  PRECISION: "fp32"
+  FREEZE_TEXT_ENCODER: True
+  PROMPT_MODE: "custom"
+  PROMPT_TEMPLATE: ["a photo of a {}."]
 BN:
   ALPHA: 0.1
 TEST:
-  BATCH_SIZE: 1
+  BATCH_SIZE: 200
 CORRUPTION:
   DATASET: cifar100_c
   SEVERITY:

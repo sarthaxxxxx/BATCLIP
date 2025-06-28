@@ -1,6 +1,9 @@
 MODEL:
   ADAPTATION: source
-  ARCH: Standard
+  ARCH: ViT-B-16
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
 TEST:
   BATCH_SIZE: 200
 CORRUPTION:
@@ -23,3 +26,5 @@ CORRUPTION:
     - elastic_transform
     - pixelate
     - jpeg_compression
+CLIP:
+  PROMPT_TEMPLATE: ["a photo of a {}."]

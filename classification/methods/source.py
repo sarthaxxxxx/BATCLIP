@@ -11,7 +11,8 @@ class Source(TTAMethod):
     @forward_decorator
     def forward_and_adapt(self, x):
         imgs_test = x[0]
-        return self.model(imgs_test)
+        logits, _, _, img_pre_features, text_pre_features = self.model(imgs_test, return_features=True)
+        return logits.detach()
 
     def copy_model_and_optimizer(self):
         """Copy the model and optimizer states for resetting after adaptation."""

@@ -20,6 +20,11 @@ CORRUPTION:
     - jpeg_compression
 MODEL:
   ADAPTATION: source
-  ARCH: resnet50
+  ARCH: ViT-B-16
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
 TEST:
   BATCH_SIZE: 64
+CLIP:
+  PROMPT_TEMPLATE: ["a photo of a {}."]

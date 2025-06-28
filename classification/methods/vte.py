@@ -22,7 +22,7 @@ class VTE(TTAMethod):
         # create a batch by concatenating the augmented versions of current test sample
         imgs_test = torch.cat(imgs_test, dim=0)
 
-        logits, img_features, text_features = self.model(imgs_test, return_features=True)
+        logits, img_features, text_features, _, _= self.model(imgs_test, return_features=True)
 
         idx_confident = select_confident_samples(logits, self.selection_p)
 

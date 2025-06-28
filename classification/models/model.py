@@ -328,6 +328,7 @@ class ZeroShotCLIP(nn.Module):
         with torch.no_grad():
             all_texts = []
             self.text_features = []
+            self.text_pre_features = []
             for c_name in self.class_names:
                 texts = [template.format(c_name) for template in prompt_templates] if self.prompt_mode != "cupl" else []
                 if self.prompt_mode in ["cupl", "all_prompts"]:
@@ -336,11 +337,12 @@ class ZeroShotCLIP(nn.Module):
                 all_texts += texts
                 texts = self.tokenize(texts).to(self.device)
                 class_embeddings = model.encode_text(texts)
+                self.text_pre_features.append(class_embeddings)
                 class_embeddings = class_embeddings / class_embeddings.norm(dim=-1, keepdim=True)
                 class_embedding = class_embeddings.mean(dim=0)
                 class_embedding = class_embedding / class_embedding.norm()
                 self.text_features.append(class_embedding)
-
+            self.text_pre_features = torch.stack(self.text_pre_features, dim=0).to(self.device)
             self.text_features = torch.stack(self.text_features, dim=0).to(self.device)
             self.tokenized_texts_all = self.tokenize(all_texts).to(self.device)
 
@@ -358,19 +360,26 @@ class ZeroShotCLIP(nn.Module):
 
         if self.freeze_text_encoder or self.cfg.MODEL.ADAPTATION == "source" or "norm" in self.cfg.MODEL.ADAPTATION:
             # get and normalize the image features
-            img_features = self.model.encode_image(imgs_test)
-            img_features = img_features / img_features.norm(dim=1, keepdim=True)
+            img_pre_features = self.model.encode_image(imgs_test.half())
+            # img_pre_features = self.model.encode_image(imgs_test)
+            img_features = img_pre_features / img_pre_features.norm(dim=1, keepdim=True)
 
             # use pre-extracted text features since no text encoder updates are performed
+            text_pre_features = self.text_pre_features.squeeze(1)
             text_features = self.text_features
         else:
-            img_features, text_features, _ = self.model(imgs_test, self.tokenized_texts_all)
+            # img_features, text_features, _ = self.model(imgs_test, self.tokenized_texts_all)
+            img_pre_features = self.model.encode_image(imgs_test)
+            img_features = img_pre_features / img_pre_features.norm(dim=1, keepdim=True)
+            
+            text_pre_features = self.model.encode_text(self.tokenized_texts_all)
+            text_features = text_pre_features / text_pre_features.norm(dim=1, keepdim=True)
 
         # cosine similarity as logits
         logits_per_image = self.logit_scale.exp() * img_features @ text_features.T
 
         if return_features:
-            return logits_per_image, img_features, text_features
+            return logits_per_image, img_features, text_features, img_pre_features, text_pre_features
         else:
             return logits_per_image
 

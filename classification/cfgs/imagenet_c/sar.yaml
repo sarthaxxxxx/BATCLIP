@@ -20,7 +20,15 @@ CORRUPTION:
     - jpeg_compression
 MODEL:
   ADAPTATION: sar
-  ARCH: resnet50
+  ARCH: ViT-B-16
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
+CLIP:
+  PRECISION: "fp32"
+  FREEZE_TEXT_ENCODER: True
+  PROMPT_MODE: "custom"
+  PROMPT_TEMPLATE: ["a photo of a {}."]
 OPTIM:
   BETA: 0.9
   LR: 0.00025

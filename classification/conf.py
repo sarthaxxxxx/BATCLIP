@@ -24,7 +24,7 @@ cfg = _C
 # ---------------------------------- Misc options --------------------------- #
 
 # Setting - see README.md for more information
-_C.SETTING = "continual"
+_C.SETTING = "reset_each_shift"
 
 # Data directory
 _C.DATA_DIR = "./data"

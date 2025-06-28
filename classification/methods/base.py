@@ -93,7 +93,7 @@ class TTAMethod(nn.Module):
                     if self.reset_after_num_updates > 0 and self.performed_updates % self.reset_after_num_updates == 0:
                         self.reset()
 
-                outputs = outputs[self.pointer.long()]
+                outputs = outputs[self.pointer.long().to(outputs.device)]
             else:
                 # create the prediction without updating the model
                 if self.has_bn:

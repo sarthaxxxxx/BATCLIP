@@ -20,8 +20,16 @@ CORRUPTION:
     - jpeg_compression
 MODEL:
   ADAPTATION: bnalpha
-  ARCH: resnet50
+  ARCH: ViT-B-16
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
+CLIP:
+  PRECISION: "fp32"
+  FREEZE_TEXT_ENCODER: True
+  PROMPT_MODE: "custom"
+  PROMPT_TEMPLATE: ["a photo of a {}."]
 BN:
   ALPHA: 0.1
 TEST:
-  BATCH_SIZE: 1
+  BATCH_SIZE: 64

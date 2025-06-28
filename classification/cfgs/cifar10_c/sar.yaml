@@ -1,6 +1,14 @@
 MODEL:
   ADAPTATION: sar
-  ARCH: Standard
+  ARCH: ViT-B-16
+  WEIGHTS: openai
+  USE_CLIP: True
+  EPISODIC: False
+CLIP:
+  PRECISION: "fp32"
+  FREEZE_TEXT_ENCODER: True
+  PROMPT_MODE: "custom"
+  PROMPT_TEMPLATE: ["a photo of a {}."]
 TEST:
   BATCH_SIZE: 200
 CORRUPTION:

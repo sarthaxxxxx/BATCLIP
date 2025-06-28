@@ -1,4 +1,4 @@
-name: tta
+name: batclip
 channels:
   - pytorch
   - nvidia

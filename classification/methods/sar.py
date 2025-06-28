@@ -47,6 +47,9 @@ class SAR(TTAMethod):
         self.optimizer.zero_grad()
         outputs = self.model(imgs_test)
 
+        if source:
+            return outputs.detach()
+
         # filtering reliable samples/gradients for further adaptation; first time forward
         entropys = self.softmax_entropy(outputs)
         filter_ids_1 = torch.where(entropys < self.margin_e0)

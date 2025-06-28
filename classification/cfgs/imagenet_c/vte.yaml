@@ -20,7 +20,7 @@ CORRUPTION:
     - jpeg_compression
 MODEL:
   ADAPTATION: vte
-  ARCH: RN50
+  ARCH: ViT-B-16
   WEIGHTS: openai
   USE_CLIP: True
 TEST:
