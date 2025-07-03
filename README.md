@@ -9,7 +9,7 @@
 <br>
 ICCV 2025 
 
-✍🏻 [Paper](https://arxiv.org/abs/2412.02837)
+✍🏻 [Paper](https://arxiv.org/abs/2412.02837) 🔗 [Project](https://sarthaxxxxx.github.io/BATCLIP/index.html)
 </div>
 
 
